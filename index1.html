@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>晏乐扫码了</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+            position: relative;
+        }
+        /* 漂浮的“扫码了”文字样式 */
+        .float-text {
+            position: absolute;
+            color: #00ff9d;
+            font-size: 20px;
+            opacity: 0;
+            user-select: none;
+            text-shadow: 0 0 8px #00ff9d, 0 0 15px #00ff9d;
+            animation: float linear infinite;
+        }
+        /* 多速度漂浮动画，营造层次 */
+        @keyframes float {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        /* 中间大字样式 */
+        .title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+        }
+        .title h1 {
+            color: #fff;
+            font-size: 50px;
+            text-shadow: 0 0 15px #00ff9d, 0 0 30px #00ff9d, 0 0 45px #00ff9d;
+            letter-spacing: 8px;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        /* 文字呼吸发光动画 */
+        @keyframes pulse {
+            from {
+                text-shadow: 0 0 15px #00ff9d, 0 0 30px #00ff9d;
+            }
+            to {
+                text-shadow: 0 0 30px #00ff9d, 0 0 60px #00ff9d, 0 0 90px #00ff9d;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <h1>晏乐扫码了</h1>
+    </div>
+
+    <script>
+        // 仅保留“扫码了”作为漂浮内容
+        const floatContent = "扫码了";
+        const container = document.body;
+        const itemCount = 150; // 漂浮数量大幅增加，视觉更密集
+
+        // 创建漂浮的“扫码了”文字
+        function createFloatText() {
+            const text = document.createElement("div");
+            text.className = "float-text";
+            text.textContent = floatContent;
+            // 随机位置、大小、动画时长，营造错落感
+            text.style.left = Math.random() * 100 + "vw";
+            text.style.fontSize = (16 + Math.random() * 20) + "px";
+            text.style.animationDuration = (8 + Math.random() * 20) + "s";
+            text.style.animationDelay = Math.random() * 15 + "s";
+            // 随机旋转方向和额外偏移
+            text.style.transformOrigin = "center";
+            
+            container.appendChild(text);
+
+            // 循环生成，移除超出屏幕的元素
+            setTimeout(() => {
+                text.remove();
+                createFloatText();
+            }, 30000);
+        }
+
+        // 初始化生成所有漂浮文字
+        for (let i = 0; i < itemCount; i++) {
+            createFloatText();
+        }
+    </script>
+</body>
+</html>
+
+
